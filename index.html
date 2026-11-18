@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="pt" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAX TALK — Conhecimento que Impulsiona Negócios</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Montserrat & Playfair Display (Estilo Didone de alto contraste para o logótipo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        serifLogo: ['"Playfair Display"', 'Georgia', 'serif'],
+                    },
+                    colors: {
+                        taxNavy: '#0B1B2B',
+                        taxNavyLight: '#12283E',
+                        taxGold: '#C99550',
+                        taxGoldHover: '#B5823F',
+                        taxBg: '#F4F5F7',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Barra de rolagem personalizada e padrões subtis de fundo */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F4F5F7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C99550;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0B1B2B;
+        }
+        
+        .hero-pattern {
+            background-image: radial-gradient(rgba(11, 27, 43, 0.07) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .dark-hero-pattern {
+            background-image: radial-gradient(rgba(201, 149, 80, 0.12) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Animação suave para o modal */
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.96) translateY(8px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-modal {
+            animation: modalFadeIn 0.25s ease-out forwards;
+        }
+    </style>
+<link rel="stylesheet" href="assets/tt.css">
+</head>
+<body class="bg-taxBg text-taxNavy font-sans antialiased selection:bg-taxGold selection:text-white">
+
+    <!-- BARRA DE NAVEGAÇÃO (STICKY NAVBAR) -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
+            
+            <!-- Logótipo Oficial TAX TALK (Versão Fundo Claro) -->
+            <a href="#inicio" class="inline-flex items-center gap-2.5 sm:gap-3.5 group focus:outline-none" aria-label="TAX TALK, Conhecimento que impulsiona negócios"><svg class="tt-bars" viewBox="0 0 27 32" aria-hidden="true"><defs><linearGradient id="ttg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F0C46A"/><stop offset="1" stop-color="#B8832F"/></linearGradient></defs><path fill="url(#ttg)" d="M0 14L7 10V32H0ZM10 4H17V32H10ZM20 0H27V32H20Z"/></svg><div class="flex flex-col leading-[0.86] font-serifLogo font-bold tracking-tight select-none"><span class="text-[22px] sm:text-[26px] text-taxNavy">TAX</span><span class="text-[22px] sm:text-[26px] text-taxGold">TALK</span></div><div class="h-9 sm:h-10 w-[1.5px] bg-taxNavy/80"></div><div class="flex flex-col text-[6.5px] sm:text-[9px] font-semibold tracking-[0.14em] sm:tracking-[0.16em] text-taxNavy uppercase leading-[1.35]"><span>Conhecimento</span><span>Que Impulsiona</span><span>Negócios</span><span class="w-6 sm:w-7 h-[2px] bg-taxGold mt-1 rounded-full"></span></div></a>
+
+            <!-- Menu Desktop -->
+            
+
+            <nav class="tt-nav" aria-label="Navegação principal"><i class="tt-pill"></i><a href="#inicio">Início</a><a href="#sobre">Sobre o Projecto</a><a href="#pilares">Como Actuamos</a><a href="#formatos">Formatos</a><a href="#publicos">Públicos-Alvo</a><a href="#momentos">Momentos</a></nav>
+<!-- Botão de Acção Desktop -->
+            <div class="hidden md:flex items-center gap-3">
+                <button onclick="openContactModal('Participação / Informações')" class="tt-cta bg-taxNavy hover:bg-taxNavyLight text-white px-6 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 hover:shadow-lg hover:shadow-taxNavy/20 transform hover:-translate-y-0.5 flex items-center gap-2 border border-taxNavy">
+                    <span>Participar<span class="tt-xl"> / Contacto</span></span>
+                    <i class="ph ph-arrow-up-right text-taxGold font-bold"></i>
+                </button>
+            </div>
+
+            <!-- Botão Menu Mobile -->
+            <button id="mobile-menu-btn" class="lg:hidden text-2xl p-2.5 rounded-xl text-taxNavy hover:bg-slate-100 focus:outline-none" aria-label="Abrir menu">
+                <i class="ph ph-list" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- Gaveta de Navegação Mobile -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-6 py-6 space-y-4 shadow-xl">
+            <a href="#inicio" class="block text-taxNavy font-bold py-1.5">Início</a>
+            <a href="#sobre" class="block text-slate-600 hover:text-taxNavy font-medium py-1.5">Sobre o Projecto</a>
+            <a href="#pilares" class="block text-slate-600 hover:text-taxNavy font-medium py-1.5">Como Actuamos</a>
+            <a href="#formatos" class="block text-slate-600 hover:text-taxNavy font-medium py-1.5">Formatos de Actividade</a>
+            <a href="#publicos" class="block text-slate-600 hover:text-taxNavy font-medium py-1.5">Públicos-Alvo</a>
+            <button onclick="openContactModal('Participação / Contacto')" class="w-full text-center bg-taxNavy text-white px-6 py-3.5 rounded-full font-semibold text-sm mt-3 flex items-center justify-center gap-2">
+                <span>Participar / Contacto</span>
+                <i class="ph ph-arrow-up-right text-taxGold"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- SECÇÃO INICIAL (HERO SECTION) -->
+    <section id="inicio" class="relative pt-10 pb-20 md:py-24 hero-pattern overflow-hidden"><canvas id="tt3d" aria-hidden="true"></canvas>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+                
+                <!-- Lado Esquerdo: Texto e CTAs -->
+                <div class="lg:col-span-7 space-y-7">
+                    <!-- Badge Superior -->
+                    <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-slate-200/90 shadow-sm text-xs font-semibold text-taxNavy">
+                        <span class="w-2 h-2 rounded-full bg-taxGold animate-pulse"></span>
+                        Plataforma de Conhecimento Empresarial
+                    </div>
+
+                    <!-- Título Principal -->
+                    <div class="relative">
+                        <h1 class="text-3xl sm:text-5xl lg:text-[54px] font-extrabold tracking-tight text-taxNavy leading-[1.12] uppercase">
+                            Conhecimento que <span class="text-taxGold">impulsiona</span> negócios
+                        </h1>
+                        <!-- Elemento gráfico geométrico subtil -->
+                        <svg class="absolute -top-6 right-4 w-12 h-12 text-taxGold/40 hidden sm:block" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <line x1="50" y1="5" x2="50" y2="95" />
+                            <line x1="5" y1="50" x2="95" y2="50" />
+                            <line x1="20" y1="20" x2="80" y2="80" />
+                            <line x1="80" y1="20" x2="20" y2="80" />
+                        </svg>
+                    </div>
+
+                    <!-- Subtítulo Institucional -->
+                    <p class="text-slate-600 text-base sm:text-lg max-w-2xl leading-relaxed font-normal">
+                        Uma iniciativa dedicada à partilha de conhecimento técnico, debate qualificado e desenvolvimento de competências — aproximando profissionais, empresas, instituições e academia através da <strong class="font-semibold text-taxNavy">fiscalidade</strong>, <strong class="font-semibold text-taxNavy">governação corporativa</strong> e <strong class="font-semibold text-taxNavy">direito dos negócios</strong>.
+                    </p>
+
+                    <!-- Botões de Acção -->
+                    <div class="pt-2 flex flex-wrap items-center gap-4">
+                        <a href="#formatos" class="inline-flex items-center gap-3 bg-taxNavy hover:bg-taxNavyLight text-white px-7 py-4 rounded-full font-semibold text-sm transition-all duration-200 shadow-lg shadow-taxNavy/15 hover:shadow-xl transform hover:-translate-y-0.5">
+                            Explorar Formatos
+                            <span class="bg-taxGold text-taxNavy rounded-full p-1 text-xs flex items-center justify-center">
+                                <i class="ph ph-arrow-up-right font-bold"></i>
+                            </span>
+                        </a>
+
+                        <a href="#sobre" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 border border-slate-300 text-taxNavy px-7 py-4 rounded-full font-semibold text-sm transition shadow-sm">
+                            Sobre o Projecto
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Lado Direito: Composição Visual Corporativa -->
+                <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
+                    
+                    <!-- Cartão Flutuante Superior -->
+                    <div class="absolute -top-5 left-2 sm:left-6 z-20 bg-white/95 backdrop-blur-md border border-slate-200/90 p-4 rounded-2xl shadow-xl flex items-center gap-3.5">
+                        <div class="w-11 h-11 rounded-xl bg-taxNavy text-taxGold flex items-center justify-center text-xl shrink-0">
+                            <i class="ph ph-scales font-bold"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-taxNavy tracking-tight">Fiscalidade • Governação</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Compliance & Direito dos Negócios</p>
+                        </div>
+                    </div>
+
+                    <!-- Contentor Principal da Imagem -->
+                    <div class="relative w-full max-w-md aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white bg-taxNavy">
+                        <div class="tt-ss absolute inset-0"><img src="assets/img/IMG_0139.webp" class="on" alt="Momento do TAX TALK, 2.ª edição" decoding="async"><img src="assets/img/IMG_0211.webp" alt="Momento do TAX TALK, 2.ª edição" decoding="async" loading="lazy"><img src="assets/img/IMG_0100.webp" alt="Momento do TAX TALK, 2.ª edição" decoding="async" loading="lazy"><img src="assets/img/IMG_0112.webp" alt="Momento do TAX TALK, 2.ª edição" decoding="async" loading="lazy"><img src="assets/img/IMG_0326.webp" alt="Momento do TAX TALK, 2.ª edição" decoding="async" loading="lazy"><img src="assets/img/IMG_0134.webp" alt="Momento do TAX TALK, 2.ª edição" decoding="async" loading="lazy"><div class="tt-dots"></div></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-taxNavy via-taxNavy/20 to-transparent"></div>
+                        
+                        <!-- Faixa Inferior com Assinatura Visual -->
+                        <div class="absolute bottom-5 left-5 right-5 bg-taxNavy/95 backdrop-blur-md text-white p-4 rounded-2xl border border-taxGold/30 shadow-lg">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] uppercase tracking-[0.2em] text-taxGold font-bold block">Núcleo Temático</span>
+                                    <span class="text-xs sm:text-sm font-semibold text-white">Diálogo Técnico & Decisão Empresarial</span>
+                                </div>
+                                <i class="ph ph-buildings text-2xl text-taxGold"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BARRA DE ÁREAS NUCLEARES -->
+    <section class="py-6 border-y border-slate-200/90 bg-white overflow-hidden" aria-label="Áreas temáticas"><div class="tt-mq tt-strip"><div><span class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Fiscalidade</span><span class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Governação Corporativa</span><span class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Compliance</span><span class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Direito dos Negócios</span><span class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Gestão Empresarial</span><span class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Segurança Jurídica</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Fiscalidade</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Governação Corporativa</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Compliance</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Direito dos Negócios</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Gestão Empresarial</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Segurança Jurídica</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Fiscalidade</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Governação Corporativa</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Compliance</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Direito dos Negócios</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Gestão Empresarial</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Segurança Jurídica</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Fiscalidade</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Governação Corporativa</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Compliance</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Direito dos Negócios</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Gestão Empresarial</span><span aria-hidden="true" class="shrink-0 whitespace-nowrap text-xs sm:text-sm font-bold uppercase tracking-wider flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-taxGold"></span>Segurança Jurídica</span></div></div></section>
+
+    <!-- SECÇÃO SOBRE O PROJECTO & MISSÃO -->
+    <section id="sobre" class="py-20 lg:py-24 bg-taxBg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Cabeçalho e Conceito -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-14 items-center">
+                <div class="lg:col-span-7 space-y-5">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-bold text-taxNavy uppercase tracking-wider">
+                        Sobre o Projecto
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-taxNavy tracking-tight leading-tight">
+                        Conhecimento técnico acessível para decisões empresariais informadas
+                    </h2>
+                    <p class="text-slate-600 leading-relaxed text-base">
+                        Idealizado por <strong class="text-taxNavy font-semibold">Neima Mondlane</strong>, o <strong class="text-taxNavy font-semibold">TAX TALK</strong> nasce como um espaço de referência para a partilha de conhecimento, debate técnico e desenvolvimento de competências. O projecto cria pontes sólidas entre profissionais, empresas, instituições públicas e a academia através de conferências, eventos corporativos, podcasts e publicações educativas.
+                    </p>
+                    <p class="text-slate-600 leading-relaxed text-sm sm:text-base">
+                        Com a <strong class="text-taxNavy font-semibold">fiscalidade</strong> no seu núcleo central, o projecto integra de forma transversal temas de governação corporativa, compliance, advocacia e direito dos negócios, promovendo um diálogo qualificado sobre obrigações fiscais, integridade e segurança jurídica.
+                    </p>
+                </div>
+
+                <!-- Imagem Circular Institucional -->
+                <div class="lg:col-span-5 flex justify-center lg:justify-end">
+                    <div class="relative">
+                        <div class="w-60 h-60 sm:w-72 sm:h-72 rounded-full overflow-hidden border-4 border-white shadow-2xl relative group bg-taxNavy">
+                            <img src="assets/img/neima-1.webp" alt="Neima Mondlane, idealizadora do TAX TALK" loading="lazy" decoding="async" class="w-full h-full object-cover" style="object-position:50% 10%">
+                        </div>
+                        <div class="tt-mini"><img src="assets/img/neima-2.webp" alt="Neima Mondlane" loading="lazy" decoding="async" style="object-position:50% 20%"></div>
+<!-- Selo Dourado -->
+                        <div class="absolute -bottom-2 -left-2 bg-taxNavy text-white px-4 py-2.5 rounded-2xl shadow-lg border border-taxGold/40">
+                            <p class="text-[10px] uppercase tracking-widest text-taxGold font-bold">Idealização</p>
+                            <p class="text-xs font-semibold">Neima Mondlane</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Escuro em Azul-Marinho (#0B1B2B): Missão e Posicionamento -->
+            <div class="bg-white text-taxNavy rounded-3xl p-7 sm:p-12 shadow-xl relative overflow-hidden border border-slate-200/90">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+                    
+                    <!-- Lado Esquerdo: Missão & Posicionamento -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div>
+                            <span class="inline-block text-xs font-bold uppercase tracking-[0.2em] text-taxGold mb-2">
+                                Missão & Posicionamento
+                            </span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-taxNavy mb-3 leading-snug">
+                                Rigoroso, profissional e próximo da realidade dos negócios
+                            </h3>
+                            <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                                Tornar matérias técnicas complexas compreensíveis e aplicáveis no dia-a-dia das organizações, fortalecendo a cultura de conformidade, ética e boa governação.
+                            </p>
+                        </div>
+
+                        <!-- Pills das Áreas Temáticas -->
+                        <div class="flex flex-wrap gap-2.5 pt-1">
+                            <span class="bg-taxBg border border-taxGold/40 text-taxNavy px-4 py-2 rounded-full text-xs font-semibold hover:border-taxGold transition cursor-default">Fiscalidade</span>
+                            <span class="bg-taxBg border border-taxGold/40 text-taxNavy px-4 py-2 rounded-full text-xs font-semibold hover:border-taxGold transition cursor-default">Governação Corporativa</span>
+                            <span class="bg-taxBg border border-taxGold/40 text-taxNavy px-4 py-2 rounded-full text-xs font-semibold hover:border-taxGold transition cursor-default">Compliance</span>
+                            <span class="bg-taxBg border border-taxGold/40 text-taxNavy px-4 py-2 rounded-full text-xs font-semibold hover:border-taxGold transition cursor-default">Direito dos Negócios</span>
+                            <span class="bg-taxBg border border-taxGold/40 text-taxNavy px-4 py-2 rounded-full text-xs font-semibold hover:border-taxGold transition cursor-default">Gestão & Integridade</span>
+                        </div>
+                    </div>
+
+                    <!-- Lado Direito: Imagem Institucional de Painel/Fórum -->
+                    <div class="lg:col-span-6">
+                        <div class="tt-car rounded-2xl overflow-hidden border border-slate-200 shadow-xl aspect-video" aria-roledescription="carrossel" aria-label="Fotografias do TAX TALK"><div class="tt-ct"><img src="assets/img/IMG_0199.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0262.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0296.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0373.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0388.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0126.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0278.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0391.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"></div><button class="tt-cb tt-cp" aria-label="Imagem anterior"><i class="ph ph-caret-left"></i></button><button class="tt-cb tt-cn" aria-label="Imagem seguinte"><i class="ph ph-caret-right"></i></button><div class="tt-cd"></div></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECÇÃO PILARES / COMO ACTUAMOS (4 PASSOS INTERLIGADOS) -->
+    <section id="pilares" class="py-20 lg:py-24 bg-taxBg relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Cabeçalho da Secção -->
+            <div class="mb-16">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-bold text-taxNavy uppercase tracking-wider mb-4">
+                    Como Actuamos
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-taxNavy tracking-tight max-w-2xl">
+                    Os quatro pilares que sustentam a entrega de valor do TAX TALK
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-3 max-w-xl">
+                    Uma abordagem estruturada para transformar conhecimento técnico em vantagem competitiva e segurança institucional.
+                </p>
+            </div>
+
+            <!-- Contentor dos Cards Interligados -->
+            <div class="relative">
+                <!-- Linha Conectora SVG (Desktop) -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none hidden lg:block z-0" viewBox="0 0 1000 420" preserveAspectRatio="none">
+                    <path d="M 140 160 Q 320 60, 460 150 T 760 220 T 900 180" fill="none" stroke="#C99550" stroke-width="2" stroke-dasharray="6,6" opacity="0.65" />
+                </svg>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+                    
+                    <!-- Pilar 01 -->
+                    <div class="bg-white p-7 sm:p-8 rounded-3xl border border-slate-200/90 shadow-lg hover:shadow-xl transition-all duration-300 transform lg:-translate-y-4 hover:-translate-y-6 relative group">
+                        <div class="w-9 h-9 rounded-full bg-taxNavy text-taxGold flex items-center justify-center text-xs font-extrabold mb-5 shadow-sm">
+                            01
+                        </div>
+                        <h3 class="text-xl font-bold text-taxNavy mb-2.5">Rigor Técnico</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Análise profunda e fundamentada das obrigações fiscais, normas regulamentares e enquadramento legal empresarial.
+                        </p>
+                    </div>
+
+                    <!-- Pilar 02 -->
+                    <div class="bg-white p-7 sm:p-8 rounded-3xl border border-slate-200/90 shadow-lg hover:shadow-xl transition-all duration-300 transform lg:translate-y-10 hover:translate-y-8 relative group">
+                        <div class="w-9 h-9 rounded-full bg-taxNavy text-taxGold flex items-center justify-center text-xs font-extrabold mb-5 shadow-sm">
+                            02
+                        </div>
+                        <h3 class="text-xl font-bold text-taxNavy mb-2.5">Diálogo Qualificado</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Debate aberto, construtivo e plural entre especialistas, reguladores, líderes empresariais e academia.
+                        </p>
+                    </div>
+
+                    <!-- Pilar 03 -->
+                    <div class="bg-white p-7 sm:p-8 rounded-3xl border border-slate-200/90 shadow-lg hover:shadow-xl transition-all duration-300 transform lg:-translate-y-2 hover:-translate-y-4 relative group">
+                        <div class="w-9 h-9 rounded-full bg-taxNavy text-taxGold flex items-center justify-center text-xs font-extrabold mb-5 shadow-sm">
+                            03
+                        </div>
+                        <h3 class="text-xl font-bold text-taxNavy mb-2.5">Visão Prática</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Tradução de conceitos complexos em orientações claras com aplicação directa à realidade operacional das empresas.
+                        </p>
+                    </div>
+
+                    <!-- Pilar 04 -->
+                    <div class="bg-white p-7 sm:p-8 rounded-3xl border border-slate-200/90 shadow-lg hover:shadow-xl transition-all duration-300 transform lg:translate-y-12 hover:translate-y-10 relative group">
+                        <div class="w-9 h-9 rounded-full bg-taxNavy text-taxGold flex items-center justify-center text-xs font-extrabold mb-5 shadow-sm">
+                            04
+                        </div>
+                        <h3 class="text-xl font-bold text-taxNavy mb-2.5">Segurança Jurídica</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Capacitação para decisões informadas, prevenção de riscos, integridade e fortalecimento da governação corporativa.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Etiqueta de Rodapé da Secção -->
+                <div class="mt-16 lg:mt-20 text-center lg:text-right">
+                    <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-taxNavy border border-dashed border-taxGold px-5 py-2.5 rounded-full bg-white shadow-sm">
+                        <i class="ph ph-seal-check text-taxGold text-base"></i>
+                        Conhecimento estruturado para gerar impacto sustentável
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECÇÃO FORMATOS DE ACTIVIDADE ("O QUE FAZEMOS" - FUNDO ESCURO AZUL-MARINHO) -->
+    <section id="formatos" class="py-20 lg:py-24 bg-white border-y border-slate-200/80 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Título da Secção -->
+            <div class="mb-14 max-w-2xl">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-taxBg border border-slate-200 text-xs font-bold text-taxNavy uppercase tracking-wider mb-4">
+                    Formatos de Actividade
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-taxNavy leading-tight">
+                    Múltiplos formatos para partilhar conhecimento e conectar líderes
+                </h2>
+            </div>
+
+            <!-- Grelha de 6 Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Formato 1 -->
+                <div class="bg-taxBg border border-slate-200/90 p-8 rounded-3xl hover:border-taxGold/60 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-taxNavy border border-taxGold/30 rounded-2xl flex items-center justify-center text-2xl text-taxGold mb-6 group-hover:bg-taxGold group-hover:text-taxNavy transition duration-300">
+                        <i class="ph ph-presentation-chart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-taxNavy">Conferências & Congressos</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Organização e realização de conferências, congressos, fóruns e mesas de debate em formatos presenciais, digitais ou híbridos.
+                    </p>
+                </div>
+
+                <!-- Formato 2 -->
+                <div class="bg-taxBg border border-slate-200/90 p-8 rounded-3xl hover:border-taxGold/60 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-taxNavy border border-taxGold/30 rounded-2xl flex items-center justify-center text-2xl text-taxGold mb-6 group-hover:bg-taxGold group-hover:text-taxNavy transition duration-300">
+                        <i class="ph ph-users-three"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-taxNavy">Eventos Corporativos</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Encontros de profissionais, eventos corporativos de natureza educativa e sessões estratégicas de networking associadas.
+                    </p>
+                </div>
+
+                <!-- Formato 3 -->
+                <div class="bg-taxBg border border-slate-200/90 p-8 rounded-3xl hover:border-taxGold/60 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-taxNavy border border-taxGold/30 rounded-2xl flex items-center justify-center text-2xl text-taxGold mb-6 group-hover:bg-taxGold group-hover:text-taxNavy transition duration-300">
+                        <i class="ph ph-microphone-stage"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-taxNavy">Podcasts & Videocasts</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Produção de podcasts, entrevistas, videocasts e séries de conversas aprofundadas com especialistas e líderes de opinião.
+                    </p>
+                </div>
+
+                <!-- Formato 4 -->
+                <div class="bg-taxBg border border-slate-200/90 p-8 rounded-3xl hover:border-taxGold/60 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-taxNavy border border-taxGold/30 rounded-2xl flex items-center justify-center text-2xl text-taxGold mb-6 group-hover:bg-taxGold group-hover:text-taxNavy transition duration-300">
+                        <i class="ph ph-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-taxNavy">Seminários & Workshops</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Acções de formação executiva, seminários técnicos e workshops práticos em matérias fiscais, jurídicas e de governação.
+                    </p>
+                </div>
+
+                <!-- Formato 5 -->
+                <div class="bg-taxBg border border-slate-200/90 p-8 rounded-3xl hover:border-taxGold/60 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-taxNavy border border-taxGold/30 rounded-2xl flex items-center justify-center text-2xl text-taxGold mb-6 group-hover:bg-taxGold group-hover:text-taxNavy transition duration-300">
+                        <i class="ph ph-book-open-text"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-taxNavy">Publicações & Artigos</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Conteúdos educativos, artigos técnicos, sínteses de debates e materiais de apoio editoriais para consulta contínua.
+                    </p>
+                </div>
+
+                <!-- Formato 6 -->
+                <div class="bg-taxBg border border-slate-200/90 p-8 rounded-3xl hover:border-taxGold/60 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-12 h-12 bg-taxNavy border border-taxGold/30 rounded-2xl flex items-center justify-center text-2xl text-taxGold mb-6 group-hover:bg-taxGold group-hover:text-taxNavy transition duration-300">
+                        <i class="ph ph-gavel"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-taxNavy">Debates Temáticos</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Análise e discussão temática sobre advocacia, compliance e direito dos negócios, com enfoque puramente educativo e editorial.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECÇÃO PÚBLICOS-ALVO -->
+    <section id="publicos" class="py-20 lg:py-24 bg-taxBg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-bold text-taxNavy uppercase tracking-wider mb-4">
+                        Públicos-Alvo
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-taxNavy tracking-tight">
+                        Um ecossistema criado para quem decide, gere e investiga
+                    </h2>
+                </div>
+                <button onclick="openContactModal('Aderir à Rede TAX TALK')" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-taxNavy px-6 py-3 rounded-full text-xs font-bold border border-slate-300 shadow-sm transition self-start md:self-auto">
+                    <span>Juntar-se à Comunidade</span>
+                    <i class="ph ph-arrow-right text-taxGold"></i>
+                </button>
+            </div>
+
+            <!-- Grelha de 3 Grandes Grupos de Público -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Grupo 1 -->
+                <div class="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col">
+                    <div class="h-56 overflow-hidden relative bg-taxNavy">
+                        <img src="assets/img/IMG_0387.webp" loading="lazy" decoding="async"
+                             alt="Empresários e Gestores" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-4 right-4 bg-taxNavy/90 backdrop-blur px-3.5 py-1.5 rounded-full text-[11px] font-bold text-taxGold border border-taxGold/30">
+                            Liderança & Gestão
+                        </div>
+                    </div>
+                    <div class="p-7 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-taxNavy mb-2">Empresários e Gestores</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5">
+                                Fundadores, administradores, directores executivos e gestores que procuram visão estratégica sobre riscos fiscais, governação e sustentabilidade empresarial.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-taxNavy">
+                            <i class="ph ph-briefcase text-taxGold text-base"></i>
+                            <span>Decisões Empresariais Informadas</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grupo 2 -->
+                <div class="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col">
+                    <div class="h-56 overflow-hidden relative bg-taxNavy">
+                        <img src="assets/img/IMG_0265.webp" loading="lazy" decoding="async"
+                             alt="Profissionais de Fiscalidade, Contabilidade, Auditoria, Direito e Compliance" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-4 right-4 bg-taxNavy/90 backdrop-blur px-3.5 py-1.5 rounded-full text-[11px] font-bold text-taxGold border border-taxGold/30">
+                            Especialistas Técnicos
+                        </div>
+                    </div>
+                    <div class="p-7 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-taxNavy mb-2">Fiscalidade, Contabilidade & Direito</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5">
+                                Profissionais de fiscalidade, contabilidade, auditoria, direito e compliance interessados em actualização técnica, troca de experiências e networking de alto nível.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-taxNavy">
+                            <i class="ph ph-scales text-taxGold text-base"></i>
+                            <span>Excelência Técnica & Conformidade</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grupo 3 -->
+                <div class="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col">
+                    <div class="h-56 overflow-hidden relative bg-taxNavy">
+                        <img src="assets/img/IMG_0411.webp" loading="lazy" decoding="async"
+                             alt="Decisores Públicos, Academia e Parceiros Institucionais" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-4 right-4 bg-taxNavy/90 backdrop-blur px-3.5 py-1.5 rounded-full text-[11px] font-bold text-taxGold border border-taxGold/30">
+                            Instituições & Academia
+                        </div>
+                    </div>
+                    <div class="p-7 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-taxNavy mb-2">Decisores, Academia & Parceiros</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed mb-5">
+                                Decisores públicos, investigadores, docentes, estudantes e parceiros institucionais comprometidos com o desenvolvimento do ambiente de negócios.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-slate-100 flex items-center gap-2 text-xs font-bold text-taxNavy">
+                            <i class="ph ph-bank text-taxGold text-base"></i>
+                            <span>Cooperação Institucional & Pesquisa</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECÇÃO DE DESTAQUE EDITORIAL E POSICIONAMENTO INSTITUCIONAL -->
+    <section id="momentos" class="py-20 lg:py-24 bg-white border-y border-slate-200/80 overflow-hidden"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10"><div class="max-w-2xl"><h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-taxNavy uppercase">Momentos da 2.ª edição</h2><p class="text-slate-600 mt-4 leading-relaxed">Painéis, intervenções e networking do TAX TALK, em vídeo e fotografia.</p></div><div class="flex gap-2"><button class="tt-cb2 tt-vp" aria-label="Vídeos anteriores"><i class="ph ph-arrow-left"></i></button><button class="tt-cb2 tt-vn" aria-label="Vídeos seguintes"><i class="ph ph-arrow-right"></i></button></div></div><div class="tt-vgrid"><figure class="tt-v" data-full="assets/vid/full/1149.mp4"><video src="assets/vid/1149.mp4" poster="assets/vid/1149.jpg" muted loop playsinline preload="none" aria-label="No palco"></video><figcaption><i class="ph ph-play-circle"></i>No palco</figcaption></figure><figure class="tt-v" data-full="assets/vid/full/1706.mp4"><video src="assets/vid/1706.mp4" poster="assets/vid/1706.jpg" muted loop playsinline preload="none" aria-label="Atenção ao debate"></video><figcaption><i class="ph ph-play-circle"></i>Atenção ao debate</figcaption></figure><figure class="tt-v" data-full="assets/vid/full/1707.mp4"><video src="assets/vid/1707.mp4" poster="assets/vid/1707.jpg" muted loop playsinline preload="none" aria-label="Notas e reflexão"></video><figcaption><i class="ph ph-play-circle"></i>Notas e reflexão</figcaption></figure><figure class="tt-v" data-full="assets/vid/full/1830.mp4"><video src="assets/vid/1830.mp4" poster="assets/vid/1830.jpg" muted loop playsinline preload="none" aria-label="Conversa em palco"></video><figcaption><i class="ph ph-play-circle"></i>Conversa em palco</figcaption></figure><figure class="tt-v" data-full="assets/vid/full/1954.mp4"><video src="assets/vid/1954.mp4" poster="assets/vid/1954.jpg" muted loop playsinline preload="none" aria-label="Painel de debate"></video><figcaption><i class="ph ph-play-circle"></i>Painel de debate</figcaption></figure><figure class="tt-v" data-full="assets/vid/full/2088.mp4"><video src="assets/vid/2088.mp4" poster="assets/vid/2088.jpg" muted loop playsinline preload="none" aria-label="Intervenção no pódio"></video><figcaption><i class="ph ph-play-circle"></i>Intervenção no pódio</figcaption></figure><figure class="tt-v" data-full="assets/vid/full/2290.mp4"><video src="assets/vid/2290.mp4" poster="assets/vid/2290.jpg" muted loop playsinline preload="none" aria-label="Mesa de debate"></video><figcaption><i class="ph ph-play-circle"></i>Mesa de debate</figcaption></figure><figure class="tt-v" data-full="assets/vid/full/2291.mp4"><video src="assets/vid/2291.mp4" poster="assets/vid/2291.jpg" muted loop playsinline preload="none" aria-label="Intervenção da plateia"></video><figcaption><i class="ph ph-play-circle"></i>Intervenção da plateia</figcaption></figure><figure class="tt-v" data-full="assets/vid/full/2293.mp4"><video src="assets/vid/2293.mp4" poster="assets/vid/2293.jpg" muted loop playsinline preload="none" aria-label="Partilha de ideias"></video><figcaption><i class="ph ph-play-circle"></i>Partilha de ideias</figcaption></figure></div></div><div class="tt-mq mt-14"><div><img src="assets/img/IMG_0058.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0115.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0133.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0145.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0275.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0277.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0403.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0016.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0106.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0058.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0115.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0133.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0145.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0275.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0277.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0403.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0016.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0106.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"></div></div><div class="tt-mq r mt-4"><div><img src="assets/img/IMG_0190.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0263.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0280.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0289.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0314.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0342.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0353.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0381.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0157.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0340.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0190.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0263.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0280.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0289.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0314.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0342.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0353.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0381.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0157.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"><img src="assets/img/IMG_0340.webp" alt="Momento do TAX TALK, 2.ª edição" loading="lazy" decoding="async"></div></div></section>
+<section class="py-20 bg-taxBg border-t border-slate-200/70">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-bold text-taxNavy uppercase tracking-wider mb-4">
+                    Visão & Compromisso
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-taxNavy tracking-tight">
+                    Um espaço independente de debate e capacitação
+                </h2>
+            </div>
+
+            <!-- Cartão de Destaque -->
+            <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/90 shadow-xl relative">
+                <i class="ph ph-quotes text-5xl text-taxGold/30 absolute top-6 right-8"></i>
+                
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                    <div class="tt-duo shrink-0"><div class="tt-d1"><img src="assets/img/neima-2.webp" alt="Neima Mondlane, idealizadora do TAX TALK" loading="lazy" decoding="async" style="object-position:50% 35%"></div><div class="tt-d2"><img src="assets/img/neima-1.webp" alt="Neima Mondlane" loading="lazy" decoding="async" style="object-position:50% 5%"></div><div class="tt-badge"><span>TAX</span><span>TALK</span></div></div>
+                    
+                    <div class="space-y-4 text-center md:text-left">
+                        <p class="text-slate-700 text-base sm:text-lg leading-relaxed font-medium">
+                            "O TAX TALK foi concebido para elevar a qualidade do diálogo técnico no meio empresarial. Acreditamos que o domínio da fiscalidade, da governação corporativa e do compliance não é apenas uma obrigação regulamentar, mas um verdadeiro motor de crescimento e credibilidade para os negócios."
+                        </p>
+                        <div class="pt-1">
+                            <h4 class="font-bold text-taxNavy text-base">Neima Mondlane</h4>
+                            <p class="text-xs text-taxGold font-bold uppercase tracking-wider mt-0.5">Idealizadora do Projecto TAX TALK</p>
+                        </div>
+
+                        <!-- Nota Institucional de Âmbito Educativo -->
+                        <div class="mt-4 pt-4 border-t border-slate-100 flex items-start gap-2.5 text-left">
+                            <i class="ph ph-info text-taxGold text-lg shrink-0 mt-0.5"></i>
+                            <p class="text-xs text-slate-500 leading-relaxed">
+                                <strong>Nota de Esclarecimento:</strong> O TAX TALK dedica-se exclusivamente à partilha de conhecimento, formação, eventos educativos e produção editorial. As referências a matérias de advocacia e direito dos negócios correspondem a conteúdo e debate temático, não pressupondo a prestação de serviços jurídicos sob a marca.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BANNER CTA FINAL -->
+    <section id="contacto" class="py-16 lg:py-20 bg-taxBg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-taxNavy rounded-3xl p-10 sm:p-16 text-center text-white relative overflow-hidden dark-hero-pattern shadow-2xl border border-taxGold/20">
+                
+                <!-- Elemento decorativo dourado -->
+                <div class="w-16 h-1 bg-taxGold mx-auto rounded-full mb-6"></div>
+
+                <div class="max-w-2xl mx-auto space-y-6 relative z-10">
+                    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                        Acompanhe as próximas edições e iniciativas <span class="text-taxGold">TAX TALK</span>
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Inscreva-se para receber actualizações sobre conferências, novos episódios do podcast, workshops executivos ou para propor parcerias institucionais.
+                    </p>
+
+                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <button onclick="openContactModal('Inscrição / Próximas Edições')" class="w-full sm:w-auto bg-taxGold hover:bg-taxGoldHover text-taxNavy font-bold px-8 py-4 rounded-full text-sm transition shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                            <span>Inscrever-se / Receber Novidades</span>
+                            <i class="ph ph-paper-plane-tilt font-bold"></i>
+                        </button>
+                        <button onclick="openContactModal('Proposta de Parceria Institucional')" class="w-full sm:w-auto bg-taxNavyLight border border-taxGold/40 text-white hover:bg-white/10 font-semibold px-8 py-4 rounded-full text-sm transition">
+                            Parcerias Institucionais
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- RODAPÉ (FOOTER) -->
+    <footer class="bg-white border-t border-slate-200/90 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
+                
+                <!-- Logótipo Oficial e Descrição -->
+                <div class="md:col-span-5 space-y-5">
+                    <a href="#inicio" class="inline-flex items-center gap-3.5 focus:outline-none">
+                        <div class="flex flex-col leading-[0.86] font-serifLogo font-bold tracking-tight select-none">
+                            <span class="text-2xl text-taxNavy">TAX</span>
+                            <span class="text-2xl text-taxGold">TALK</span>
+                        </div>
+                        <div class="h-10 w-[1.5px] bg-taxNavy/80"></div>
+                        <div class="flex flex-col text-[9px] font-semibold tracking-[0.16em] text-taxNavy uppercase leading-[1.35]">
+                            <span>Conhecimento</span>
+                            <span>Que Impulsiona</span>
+                            <span>Negócios</span>
+                            <span class="w-7 h-[2px] bg-taxGold mt-1 rounded-full"></span>
+                        </div>
+                    </a>
+                    <p class="text-slate-600 text-xs sm:text-sm max-w-sm leading-relaxed">
+                        Plataforma de partilha de conhecimento, debate técnico e desenvolvimento de competências em fiscalidade, governação corporativa, compliance e direito dos negócios.
+                    </p>
+                </div>
+
+                <!-- Coluna Navegação -->
+                <div class="md:col-span-2">
+                    <h5 class="text-xs font-bold text-taxNavy uppercase tracking-wider mb-4">Navegação</h5>
+                    <ul class="space-y-2.5 text-xs font-medium text-slate-600">
+                        <li><a href="#inicio" class="hover:text-taxGold transition">Início</a></li>
+                        <li><a href="#sobre" class="hover:text-taxGold transition">Sobre o Projecto</a></li>
+                        <li><a href="#pilares" class="hover:text-taxGold transition">Como Actuamos</a></li>
+                        <li><a href="#formatos" class="hover:text-taxGold transition">Formatos</a></li>
+                        <li><a href="#publicos" class="hover:text-taxGold transition">Públicos-Alvo</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna Áreas Temáticas -->
+                <div class="md:col-span-3">
+                    <h5 class="text-xs font-bold text-taxNavy uppercase tracking-wider mb-4">Áreas Temáticas</h5>
+                    <ul class="space-y-2.5 text-xs font-medium text-slate-600">
+                        <li>Fiscalidade</li>
+                        <li>Governação Corporativa</li>
+                        <li>Compliance & Integridade</li>
+                        <li>Direito dos Negócios</li>
+                        <li>Gestão & Ambiente Empresarial</li>
+                    </ul>
+                </div>
+
+                <!-- Coluna Contacto -->
+                <div class="md:col-span-2">
+                    <h5 class="text-xs font-bold text-taxNavy uppercase tracking-wider mb-4">Contacto</h5>
+                    <ul class="space-y-2.5 text-xs font-medium text-slate-600">
+                        <li>
+                            <button onclick="openContactModal('Informações Gerais')" class="hover:text-taxGold transition text-left">
+                                Enviar Mensagem
+                            </button>
+                        </li>
+                        <li>
+                            <button onclick="openContactModal('Parceria / Patrocínio')" class="hover:text-taxGold transition text-left">
+                                Parcerias
+                            </button>
+                        </li>
+                        <li>Maputo, Moçambique</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Barra Inferior de Direitos e Titularidade -->
+            <div class="border-t border-slate-100 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 font-medium gap-4">
+                <p>&copy; 2026 TAX TALK — Conhecimento que impulsiona negócios. Todos os direitos reservados.</p>
+                <p class="text-taxNavy font-semibold">
+                    Idealizadora e Titular: Neima Carmen Bearina Mondlane
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL INTERACTIVO DE CONTACTO / INSCRIÇÃO -->
+    <div id="contact-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-taxNavy/75 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-7 sm:p-9 shadow-2xl border border-slate-200 relative animate-modal">
+            
+            <!-- Botão Fechar -->
+            <button onclick="closeContactModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-taxNavy flex items-center justify-center transition focus:outline-none" aria-label="Fechar janela">
+                <i class="ph ph-x text-lg font-bold"></i>
+            </button>
+
+            <!-- Cabeçalho do Modal -->
+            <div class="mb-6">
+                <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-taxGold mb-1">
+                    TAX TALK • Contacto Directo
+                </span>
+                <h3 id="modal-title" class="text-2xl font-extrabold text-taxNavy">Participar / Contacto</h3>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1">
+                    Preencha os dados abaixo para receber novidades sobre eventos, podcasts ou estabelecer contacto institucional.
+                </p>
+            </div>
+
+            <!-- Formulário -->
+            <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <div>
+                    <label for="nome" class="block text-xs font-bold text-taxNavy uppercase tracking-wider mb-1.5">Nome Completo *</label>
+                    <input type="text" id="nome" required placeholder="Ex.: Carlos Machel" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-taxGold focus:ring-2 focus:ring-taxGold/20 transition">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="email" class="block text-xs font-bold text-taxNavy uppercase tracking-wider mb-1.5">E-mail *</label>
+                        <input type="email" id="email" required placeholder="nome@empresa.co.mz" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-taxGold focus:ring-2 focus:ring-taxGold/20 transition">
+                    </div>
+                    <div>
+                        <label for="perfil" class="block text-xs font-bold text-taxNavy uppercase tracking-wider mb-1.5">Perfil / Área</label>
+                        <select id="perfil" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:border-taxGold focus:ring-2 focus:ring-taxGold/20 transition">
+                            <option value="Empresário / Gestor">Empresário / Gestor</option>
+                            <option value="Fiscalidade / Contabilidade">Fiscalidade / Contabilidade</option>
+                            <option value="Direito / Compliance">Direito / Compliance</option>
+                            <option value="Instituição Pública / Academia">Instituição / Academia</option>
+                            <option value="Parceiro Institucional">Parceiro Institucional</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="mensagem" class="block text-xs font-bold text-taxNavy uppercase tracking-wider mb-1.5">Mensagem ou Interesse</label>
+                    <textarea id="mensagem" rows="3" placeholder="Indique o seu interesse em conferências, formação, podcasts ou parcerias..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-taxGold focus:ring-2 focus:ring-taxGold/20 transition"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-taxNavy hover:bg-taxNavyLight text-white font-bold py-3.5 rounded-full text-sm transition shadow-lg flex items-center justify-center gap-2">
+                    <span>Enviar Registo</span>
+                    <i class="ph ph-check-circle text-taxGold text-base"></i>
+                </button>
+            </form>
+
+            <!-- Caixa de Feedback (Substitui alert()) -->
+            <div id="form-feedback" class="hidden text-center py-6 space-y-4">
+                <div class="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-3xl mx-auto border border-emerald-200">
+                    <i class="ph ph-check-circle font-bold"></i>
+                </div>
+                <h4 class="text-xl font-bold text-taxNavy">Registo Recebido com Sucesso!</h4>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Obrigado pelo seu interesse no <strong>TAX TALK</strong>. A nossa equipa entrará em contacto brevemente com as informações solicitadas.
+                </p>
+                <button onclick="closeContactModal()" class="bg-taxNavy text-white px-7 py-2.5 rounded-full text-xs font-bold hover:bg-taxNavyLight transition">
+                    Concluir
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SCRIPTS DE INTERACTIVIDADE -->
+    <script>
+        // Controlo do Menu Mobile
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.classList.remove('ph-list');
+                menuIcon.classList.add('ph-x');
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('ph-x');
+                menuIcon.classList.add('ph-list');
+            }
+        });
+
+        // Fechar menu mobile ao clicar num link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('ph-x');
+                menuIcon.classList.add('ph-list');
+            });
+        });
+
+        // Controlo do Modal de Contacto
+        const contactModal = document.getElementById('contact-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const contactForm = document.getElementById('contact-form');
+        const formFeedback = document.getElementById('form-feedback');
+
+        function openContactModal(subject) {
+            // Fechar menu mobile caso esteja aberto
+            mobileMenu.classList.add('hidden');
+            menuIcon.classList.remove('ph-x');
+            menuIcon.classList.add('ph-list');
+
+            modalTitle.textContent = subject || 'Participar / Contacto';
+            contactForm.classList.remove('hidden');
+            formFeedback.classList.add('hidden');
+            contactForm.reset();
+
+            contactModal.classList.remove('hidden');
+            contactModal.classList.add('flex');
+        }
+
+        function closeContactModal() {
+            contactModal.classList.add('hidden');
+            contactModal.classList.remove('flex');
+        }
+
+        // Fechar modal ao clicar fora da caixa
+        contactModal.addEventListener('click', (e) => {
+            if (e.target === contactModal) {
+                closeContactModal();
+            }
+        });
+
+        // Submissão do Formulário sem alert()
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            contactForm.classList.add('hidden');
+            formFeedback.classList.remove('hidden');
+        }
+    </script>
+<div class="sm" aria-hidden="true"><div class="sm-l"><i style="background:#0B1B2B"></i><i style="background:#C99550"></i><i style="background:#E9D3AB"></i></div><aside class="sm-p"><ul class="sm-ul"><li class="sm-li"><a class="sm-a" href="#inicio">Início</a></li><li class="sm-li"><a class="sm-a" href="#sobre">Sobre o Projecto</a></li><li class="sm-li"><a class="sm-a" href="#pilares">Como Actuamos</a></li><li class="sm-li"><a class="sm-a" href="#formatos">Formatos</a></li><li class="sm-li"><a class="sm-a" href="#publicos">Públicos-Alvo</a></li><li class="sm-li"><a class="sm-a" href="#momentos">Momentos</a></li></ul><button class="sm-cta">Participar / Contacto <i class="ph ph-arrow-up-right"></i></button><p class="sm-ft">Conhecimento que impulsiona negócios</p></aside></div><div id="tt-prog"></div><button id="tt-top" aria-label="Voltar ao topo"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="22"/><circle class="pg" cx="24" cy="24" r="22"/></svg><i class="ph ph-arrow-up"></i></button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="assets/tt.js"></script>
+<script src="assets/tt2.js"></script>
+<script src="assets/tt3.js"></script>
+</body>
+</html>
